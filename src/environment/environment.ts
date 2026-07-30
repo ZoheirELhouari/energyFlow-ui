@@ -10,6 +10,6 @@
  */
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://34.247.53.152/api',
+  apiBaseUrl: 'https://api.zoheir-elhouari.com/api',
   segmentationJobId: '73f48c75-06b3-40b8-ae7b-aeb863aa0d68',
 } as const;
