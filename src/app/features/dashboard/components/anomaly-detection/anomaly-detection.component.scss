@@ -20,15 +20,15 @@
   line-height: 16px;
 
   &--critical {
-    background: rgba(239, 68, 68, 0.12);
-    color: #fca5a5;
-    border: 1px solid rgba(239, 68, 68, 0.35);
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
   }
 
   &--high {
-    background: rgba(245, 158, 11, 0.12);
-    color: #fcd34d;
-    border: 1px solid rgba(245, 158, 11, 0.35);
+    background: #fffbeb;
+    color: #d97706;
+    border: 1px solid #fde3a7;
   }
 }
 
@@ -38,36 +38,37 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   overflow-y: auto;
-  max-height: 320px;
-  padding-right: 4px;
+  max-height: 340px;
 }
 
 .anomaly {
+  position: relative;
   display: flex;
   gap: 10px;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
+  padding: 16px 8px 16px 20px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
 
-  &__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-top: 6px;
-    flex-shrink: 0;
+  &:last-child { border-bottom: none; }
 
-    &[data-severity='critical'] {
-      background: var(--severity-critical);
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
-    }
-    &[data-severity='high'] {
-      background: var(--severity-high);
-      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    bottom: 14px;
+    width: 4px;
+    border-radius: 4px;
+    background: #cbd5e1;
   }
+
+  &--critical::before { background: var(--severity-critical); }
+  &--high::before { background: var(--severity-high); }
+
+  /* Dot replaced by the left accent bar. */
+  &__dot { display: none; }
 
   &__body { flex: 1; min-width: 0; }
 

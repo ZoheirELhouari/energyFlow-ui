@@ -1,0 +1,44 @@
+@if (open()) {
+  <div class="modal" (click)="close.emit()">
+    <div
+      class="modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Thesis preview"
+      (click)="$event.stopPropagation()"
+    >
+      <header class="modal__head">
+        <div class="modal__titles">
+          <h2 class="modal__title">About this prototype</h2>
+          <p class="modal__subtitle">Master's thesis · the research behind EnergyFlow</p>
+        </div>
+        <button type="button" class="modal__close" (click)="close.emit()" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </header>
+
+      <div class="modal__body">
+        <iframe
+          class="modal__pdf"
+          src="thesis.pdf#view=FitH"
+          title="Thesis PDF preview"
+        ></iframe>
+      </div>
+
+      <footer class="modal__foot">
+        <span class="modal__hint">Preview of the thesis PDF</span>
+        <a class="modal__link" [href]="pdfUrl" target="_blank" rel="noopener">
+          Open in new tab
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+        </a>
+      </footer>
+    </div>
+  </div>
+}

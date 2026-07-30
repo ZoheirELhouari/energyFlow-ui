@@ -1,9 +1,11 @@
 <div class="cluster-row">
   @for (c of clusters(); track c.id) {
     <div class="cluster-card" [style.--accent]="c.color">
-      <div class="cluster-card__name">{{ c.name }}</div>
+      <div class="cluster-card__name">
+        <span class="cluster-card__dot" aria-hidden="true"></span>{{ c.name }}
+      </div>
       <div class="cluster-card__value">{{ c.percentage }}%</div>
-      <div class="cluster-card__sub">{{ c.avgConsumption }} kWh avg</div>
+      <div class="cluster-card__sub">{{ c.avgConsumption }} kWh daily avg</div>
     </div>
   }
 </div>

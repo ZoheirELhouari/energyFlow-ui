@@ -44,24 +44,30 @@ body {
    ========================================================================= */
 
 :root {
-  /* surfaces */
-  --bg-base: #0b0b11;
-  --bg-sidebar: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-card-hover: #1a1a2e;
+  /* surfaces — aurora glass, mint/violet mesh */
+  --bg-base: #edeef6;        /* misty lavender page */
+  --bg-panel: #ffffff;
+  --bg-main: transparent;
+  --bg-sidebar: transparent;
+  --bg-card: rgba(255, 255, 255, 0.62);
+  --bg-card-hover: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.75);
 
   /* text */
-  --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
 
   /* borders / dividers */
-  --border-subtle: #1e293b;
-  --border-strong: #334155;
+  --border-subtle: #eaedf2;
+  --border-strong: #d6dbe3;
 
-  /* accents */
-  --accent-teal: #06b6d4;
-  --accent-teal-dim: rgba(6, 182, 212, 0.14);
+  /* accents — indigo */
+  --accent-teal: #6366f1;
+  --accent-teal-dim: rgba(99, 102, 241, 0.1);
+  --accent: #6366f1;
+  --accent-strong: #4f46e5;
+  --accent-soft: #eef0fe;
 
   /* kpi card top-borders */
   --kpi-green: #22c55e;
@@ -74,13 +80,13 @@ body {
   --severity-high: #f59e0b;
 
   /* layout */
-  --sidebar-width: 220px;
-  --topbar-height: 64px;
+  --sidebar-width: 232px;
+  --topbar-height: 92px;
 
   /* type */
   --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --text-base: 13px;
-  --text-kpi: 28px;
+  --text-kpi: 30px;
 }
 
 * {
@@ -120,11 +126,11 @@ button {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-subtle);
+  background: #d6dbe3;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-strong);
+  background: #c2c9d4;
 }
 
 /* ---------- lightweight utility classes used inline in templates -------- */

@@ -7,10 +7,6 @@ import type { Cluster } from '../../models/segmentation';
 import { KpiRowComponent } from './components/kpi-row/kpi-row.component';
 import { ClusterDistributionComponent } from './components/cluster-distribution/cluster-distribution.component';
 import { ConsumptionPatternsChartComponent } from './components/consumption-patterns-chart/consumption-patterns-chart.component';
-import { TemperatureCorrelationChartComponent } from './components/temperature-correlation-chart/temperature-correlation-chart.component';
-import { LoadForecastChartComponent } from './components/load-forecast-chart/load-forecast-chart.component';
-import { VariabilityChartComponent } from './components/variability-chart/variability-chart.component';
-import { GeographicDistributionComponent } from './components/geographic-distribution/geographic-distribution.component';
 import { ClusterDonutChartComponent } from './components/cluster-donut-chart/cluster-donut-chart.component';
 import { AnomalyDetectionComponent } from './components/anomaly-detection/anomaly-detection.component';
 import { ForecastingService } from '../../services/forecasting.service';
@@ -24,8 +20,6 @@ type LoadState = 'idle' | 'loading' | 'ready' | 'error';
     KpiRowComponent,
     ClusterDistributionComponent,
     ConsumptionPatternsChartComponent,
-    TemperatureCorrelationChartComponent,
-    VariabilityChartComponent,
     ClusterDonutChartComponent,
     AnomalyDetectionComponent,
   ],

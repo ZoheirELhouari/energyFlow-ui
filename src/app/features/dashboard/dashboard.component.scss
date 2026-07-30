@@ -1,7 +1,7 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
   max-width: 1680px;
   margin: 0 auto;
 }
@@ -12,7 +12,7 @@
 
 .dashboard__grid {
   display: grid;
-  gap: 20px;
+  gap: 22px;
 
   &--two {
     grid-template-columns: 1fr 1fr;
@@ -21,11 +21,16 @@
   &--three {
     grid-template-columns: 1fr 1fr 1fr;
   }
+
+  &--split {
+    grid-template-columns: 5fr 6fr;
+  }
 }
 
 @media (max-width: 1024px) {
   .dashboard__grid--two,
-  .dashboard__grid--three {
+  .dashboard__grid--three,
+  .dashboard__grid--split {
     grid-template-columns: 1fr;
   }
 }

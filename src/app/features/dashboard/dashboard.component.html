@@ -17,22 +17,14 @@
     <!-- Zone 2: Cluster distribution -->
     <app-cluster-distribution class="dashboard__row" [clusters]="clusters()" />
 
-    <!-- Zone 3: Charts row 1 -->
+    <!-- Zone 3: Cluster centroids -->
     <div class="dashboard__grid">
       <app-consumption-patterns-chart [clusters]="clusters()" />
     </div>
 
-    <!-- Zone 4: Charts row 2 -->
-    <div class="dashboard__grid dashboard__grid--two">
-      <app-variability-chart [clusters]="clusters()" />
-      <app-temperature-correlation-chart [clusters]="clusters()" />
-    </div>
-
-    <!-- Zone 5: Bottom row -->
-    <div class="dashboard__grid dashboard__grid--two">
+    <!-- Zone 4: Distribution + anomalies -->
+    <div class="dashboard__grid dashboard__grid--split">
       <app-cluster-donut-chart [clusters]="clusters()" />
-    </div>
-    <div class="dashboard__grid">
       <app-anomaly-detection />
     </div>
   }

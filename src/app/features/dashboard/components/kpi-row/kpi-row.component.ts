@@ -3,6 +3,8 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import type { Cluster } from '../../../../models/segmentation';
 import { KPI_PRESENTATION } from '../../mock-data';
 
+const HERO_INDEX = 3;
+
 interface KpiView {
   readonly label: string;
   readonly value: string;
@@ -29,10 +31,8 @@ export class KpiRowComponent {
       ? clusters.reduce((a, c) => a + c.avgTemperature * c.percentage, 0) / totalPct
       : 0;
 
-    const coverage = clusters.length ? Math.min(100, Math.round(totalPct * 10) / 10) : 0;
-
     const values: readonly string[] = [
-      `${coverage.toFixed(1)}%`,
+      '195K',
       `${(totalConsumption / 1_000_000).toFixed(1)}M`,
       `${weightedTemp.toFixed(1)}°C`,
       `${clusters.length}`,
@@ -45,4 +45,12 @@ export class KpiRowComponent {
       value: values[i],
     }));
   });
+
+  /** First stats render inside the shared glass band. */
+  protected readonly bandKpis = computed(() =>
+    this.kpis().filter((_, i) => i !== HERO_INDEX),
+  );
+
+  /** The final stat renders as the gradient hero card. */
+  protected readonly heroKpi = computed(() => this.kpis()[HERO_INDEX]);
 }

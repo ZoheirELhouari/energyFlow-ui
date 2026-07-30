@@ -1,12 +1,12 @@
 <header class="topbar">
   <div class="topbar__heading">
-    <h1 class="topbar__title">Energy Analytics</h1>
-    <p class="topbar__subtitle">Smart Meter Clustering Dashboard</p>
+    <h1 class="topbar__title">EnergyFlow</h1>
+    <p class="topbar__subtitle">Smart meter clustering · FastMICE</p>
   </div>
 
   <div class="topbar__actions">
     <span class="topbar__updated">
-      Last updated: {{ lastUpdated() | date: 'MMM d, HH:mm:ss' }}
+      Updated {{ lastUpdated() | date: 'HH:mm:ss' }}
     </span>
 
     <button type="button" class="topbar__btn topbar__btn--primary" (click)="refresh()" aria-label="Refresh">

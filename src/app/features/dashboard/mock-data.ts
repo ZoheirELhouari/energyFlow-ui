@@ -116,10 +116,10 @@ export interface KpiPresentation {
  * live backend data in KpiRowComponent.
  */
 export const KPI_PRESENTATION: readonly KpiPresentation[] = [
-  { label: 'Total Smart Meters', sublabel: 'Coverage', accentVar: '--kpi-green' },
+  { label: 'Households', sublabel: '', accentVar: '--kpi-green' },
   { label: 'Total Consumption', sublabel: 'kWh', accentVar: '--kpi-amber' },
-  { label: 'Avg. Temperature', sublabel: 'Daily avg', accentVar: '--kpi-purple' },
-  { label: 'Active Clusters', sublabel: 'Identified', accentVar: '--kpi-cyan' },
+  { label: 'Avg Daily Temp', sublabel: '', accentVar: '--kpi-purple' },
+  { label: 'Active Clusters', sublabel: 'Identified via FastMICE', accentVar: '--kpi-cyan' },
 ];
 
 // ------------------- Anomalies (no backend endpoint yet) --------------

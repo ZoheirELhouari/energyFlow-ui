@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import type { EChartsCoreOption } from 'echarts/core';
 
@@ -29,8 +29,31 @@ const MONTH_LABELS: readonly string[] = [
 export class ConsumptionPatternsChartComponent {
   readonly clusters = input.required<readonly Cluster[]>();
 
+  /** Cluster names the user has toggled off; empty means "show all". */
+  private readonly hidden = signal<ReadonlySet<string>>(new Set());
+
+  /** Clusters with their current visibility, for the filter chips. */
+  protected readonly filters = computed(() =>
+    this.clusters().map((c) => ({
+      name: c.name,
+      color: c.color,
+      active: !this.hidden().has(c.name),
+    })),
+  );
+
+  protected toggle(name: string): void {
+    const next = new Set(this.hidden());
+    if (next.has(name)) {
+      next.delete(name);
+    } else {
+      next.add(name);
+    }
+    this.hidden.set(next);
+  }
+
   protected readonly options = computed<EChartsCoreOption>(() => {
-    const clusters = this.clusters();
+    const hidden = this.hidden();
+    const clusters = this.clusters().filter((c) => !hidden.has(c.name));
     // Axis = day index 0..N-1. Use the shortest centroid length to stay safe.
     const dayCount = clusters.reduce(
       (min, c) => Math.min(min, c.centroid?.length ?? 365),
@@ -45,14 +68,14 @@ export class ConsumptionPatternsChartComponent {
       smooth: true,
       sampling: 'lttb',
       symbol: 'none',
-      lineStyle: { width: 1.8, color: c.color },
+      lineStyle: { width: 2.4, color: c.color },
       itemStyle: { color: c.color },
       areaStyle: {
         color: {
           type: 'linear',
           x: 0, y: 0, x2: 0, y2: 1,
           colorStops: [
-            { offset: 0, color: hexWithAlpha(c.color, 0.18) },
+            { offset: 0, color: hexWithAlpha(c.color, 0.32) },
             { offset: 1, color: hexWithAlpha(c.color, 0) },
           ],
         },
@@ -81,12 +104,8 @@ export class ConsumptionPatternsChartComponent {
           return header + rows;
         },
       },
-      legend: {
-        ...DARK_CHART_DEFAULTS.legend,
-        bottom: 0,
-        data: clusters.map((c) => c.name),
-      },
-      grid: { left: 44, right: 20, top: 16, bottom: 52, containLabel: false },
+      legend: { show: false },
+      grid: { left: 44, right: 20, top: 24, bottom: 28, containLabel: false },
       xAxis: {
         type: 'category',
         boundaryGap: false,

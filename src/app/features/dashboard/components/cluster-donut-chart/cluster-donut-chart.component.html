@@ -1,15 +1,3 @@
-<app-dashboard-card title="Cluster Distribution" subtitle="Meter count vs consumption share">
-  <div class="donuts">
-    <div class="donuts__chart" echarts [options]="metersOption()"></div>
-    <!-- <div class="donuts__chart" echarts [options]="consumptionOption()"></div> -->
-  </div>
-
-  <!-- <ul class="donuts__legend">
-    @for (c of legend(); track c.id) {
-      <li>
-        <span class="swatch" [style.background]="c.color"></span>
-        <span>{{ c.name }}</span>
-      </li>
-    }
-  </ul> -->
+<app-dashboard-card title="Distribution" subtitle="Meter share per cluster">
+  <div class="dist-chart" echarts [options]="barOption()"></div>
 </app-dashboard-card>

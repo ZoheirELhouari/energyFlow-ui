@@ -2,5 +2,21 @@
   title="Cluster Centroids"
   subtitle="Daily load profile · 2023"
 >
+  <div slot="actions" class="cluster-filter">
+    @for (f of filters(); track f.name) {
+      <button
+        type="button"
+        class="cluster-filter__chip"
+        [class.cluster-filter__chip--off]="!f.active"
+        [style.--dot]="f.color"
+        (click)="toggle(f.name)"
+        [attr.aria-pressed]="f.active"
+      >
+        <span class="cluster-filter__dot" aria-hidden="true"></span>
+        <span class="cluster-filter__label">{{ f.name }}</span>
+      </button>
+    }
+  </div>
+
   <div class="chart" echarts [options]="options()"></div>
 </app-dashboard-card>

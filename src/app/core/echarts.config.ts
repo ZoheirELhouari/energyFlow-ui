@@ -54,12 +54,12 @@ export { echarts };
  * card surfaces.
  */
 export const CHART_COLORS = {
-  axisLine: '#1e293b',
-  splitLine: '#1e293b',
+  axisLine: '#e5e9ef',
+  splitLine: '#eef1f5',
   axisLabel: '#94a3b8',
-  text: '#e2e8f0',
-  tooltipBg: '#12121a',
-  tooltipBorder: '#1e293b',
+  text: '#0f172a',
+  tooltipBg: '#ffffff',
+  tooltipBorder: '#e5e9ef',
 } as const;
 
 /**

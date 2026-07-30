@@ -17,77 +17,55 @@ import type { Cluster } from '../../../../models/segmentation';
 export class ClusterDonutChartComponent {
   readonly clusters = input.required<readonly Cluster[]>();
 
-  protected readonly metersOption = computed<EChartsCoreOption>(() =>
-    buildDonut(
-      'Smart Meter %',
-      this.clusters().map((c) => ({ name: c.name, value: c.percentage, color: c.color })),
-      '%',
-    ),
-  );
+  protected readonly barOption = computed<EChartsCoreOption>(() => {
+    // Largest share on top for an easy-to-read distribution.
+    const rows = [...this.clusters()].sort((a, b) => a.percentage - b.percentage);
 
-  protected readonly consumptionOption = computed<EChartsCoreOption>(() =>
-    buildDonut(
-      'Total Consumption',
-      this.clusters().map((c) => ({
-        name: c.name,
-        value: round(c.totalConsumption / 1_000_000, 1),
-        color: c.color,
-      })),
-      'M kWh',
-    ),
-  );
-
-  protected readonly legend = computed(() => this.clusters());
-}
-
-function buildDonut(
-  centerLabel: string,
-  data: Array<{ name: string; value: number; color: string }>,
-  unit: string,
-): EChartsCoreOption {
-  const total = data.reduce((a, b) => a + b.value, 0);
-  return {
-    ...DARK_CHART_DEFAULTS,
-    tooltip: {
-      ...DARK_CHART_DEFAULTS.tooltip,
-      trigger: 'item',
-      formatter: (p: { name: string; value: number; percent: number }) =>
-        `${p.name}<br/><b>${p.value} ${unit}</b> (${p.percent}%)`,
-    },
-    series: [
-      {
-        type: 'pie',
-        radius: ['58%', '82%'],
-        center: ['50%', '50%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: true,
-          position: 'center',
-          formatter: [
-            `{name|${centerLabel}}`,
-            `{value|${round(total)}}`,
-            `{unit|${unit}}`,
-          ].join('\n'),
-          rich: {
-            name: { color: '#94a3b8', fontSize: 11, fontWeight: 500, padding: [0, 0, 4, 0] },
-            value: { color: '#e2e8f0', fontSize: 18, fontWeight: 700, lineHeight: 22 },
-            unit: { color: '#64748b', fontSize: 10, padding: [2, 0, 0, 0] },
-          },
-        },
-        labelLine: { show: false },
-        itemStyle: { borderColor: '#12121a', borderWidth: 2 },
-        emphasis: { scale: false },
-        data: data.map((d) => ({
-          name: d.name,
-          value: d.value,
-          itemStyle: { color: d.color },
-        })),
+    return {
+      ...DARK_CHART_DEFAULTS,
+      tooltip: {
+        ...DARK_CHART_DEFAULTS.tooltip,
+        trigger: 'item',
+        formatter: (p: { name: string; value: number }) =>
+          `${p.name}<br/><b>${p.value}%</b> of meters`,
       },
-    ],
-  };
-}
-
-function round(n: number, digits = 1): number {
-  const f = Math.pow(10, digits);
-  return Math.round(n * f) / f;
+      grid: { left: 6, right: 46, top: 6, bottom: 6, containLabel: true },
+      xAxis: {
+        type: 'value',
+        max: (v: { max: number }) => Math.ceil(v.max / 5) * 5,
+        axisLine: { show: false },
+        axisTick: { show: false },
+        axisLabel: { show: false },
+        splitLine: { show: false },
+      },
+      yAxis: {
+        type: 'category',
+        data: rows.map((c) => c.name),
+        axisLine: { show: false },
+        axisTick: { show: false },
+        axisLabel: { color: '#475569', fontSize: 12, fontWeight: 500 },
+      },
+      series: [
+        {
+          type: 'bar',
+          barWidth: 16,
+          showBackground: true,
+          backgroundStyle: { color: 'rgba(15, 23, 42, 0.05)', borderRadius: 8 },
+          itemStyle: { borderRadius: 8 },
+          label: {
+            show: true,
+            position: 'right',
+            formatter: '{c}%',
+            color: '#0f172a',
+            fontSize: 12,
+            fontWeight: 700,
+          },
+          data: rows.map((c) => ({
+            value: c.percentage,
+            itemStyle: { color: c.color },
+          })),
+        },
+      ],
+    };
+  });
 }
