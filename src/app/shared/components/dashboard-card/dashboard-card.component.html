@@ -1,0 +1,19 @@
+<section class="card" [class]="variant()">
+  @if (title()) {
+    <header class="card__head">
+      <div class="card__titles">
+        <h2 class="card__title">{{ title() }}</h2>
+        @if (subtitle()) {
+          <p class="card__subtitle">{{ subtitle() }}</p>
+        }
+      </div>
+      <div class="card__actions">
+        <ng-content select="[slot=actions]" />
+      </div>
+    </header>
+  }
+
+  <div class="card__body">
+    <ng-content />
+  </div>
+</section>

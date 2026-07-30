@@ -1,0 +1,13 @@
+<app-dashboard-card
+  title="Consumption Forecast"
+  subtitle="Solid = 2023 actual centroid · Dashed = forecast"
+>
+  <span slot="actions" class="confidence-tag">95% CI</span>
+  @if (options()) {
+    <div class="chart" echarts [options]="options()!"></div>
+  } @else {
+    <div class="chart chart--empty">
+      <p>Loading cluster data…</p>
+    </div>
+  }
+</app-dashboard-card>

@@ -1,0 +1,10 @@
+<app-dashboard-card
+  title="Anomaly Distribution"
+  subtitle="Deviation vs confidence score — click a point to inspect"
+>
+  @if (options()) {
+    <div class="chart" echarts [options]="options()!" (chartClick)="onChartClick($event)"></div>
+  } @else {
+    <div class="chart chart--empty"><p>Run a scan to see anomalies.</p></div>
+  }
+</app-dashboard-card>

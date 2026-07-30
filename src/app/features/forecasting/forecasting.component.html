@@ -1,0 +1,109 @@
+<div class="forecasting">
+  <!-- Header + Controls -->
+  <header class="forecasting__header">
+    <div class="forecasting__title-block">
+      <h1 class="forecasting__title">Load Forecasting</h1>
+      <p class="forecasting__subtitle">Centroid-based consumption prediction per cluster</p>
+    </div>
+  </header>
+
+  <!-- Controls bar -->
+  <div class="controls">
+    <div class="controls__group">
+      <label class="controls__label" for="cluster-select">Cluster</label>
+      <select
+        id="cluster-select"
+        class="controls__select"
+        [ngModel]="selectedClusterId()"
+        (ngModelChange)="selectedClusterId.set($event)"
+      >
+        @for (c of clusters; track c.id) {
+          <option [ngValue]="c.id">{{ c.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="controls__group">
+      <label class="controls__label" for="horizon-input">Horizon (days)</label>
+      <input
+        id="horizon-input"
+        class="controls__input"
+        type="number"
+        min="1"
+        max="30"
+        [ngModel]="horizon()"
+        (ngModelChange)="horizon.set($event)"
+      />
+    </div>
+
+    <div class="controls__actions">
+      <button
+        class="btn btn--secondary"
+        (click)="trainModels()"
+        [disabled]="isTraining()"
+      >
+        @if (isTraining()) {
+          <span class="spinner-sm" aria-hidden="true"></span>
+          Training…
+        } @else {
+          Train Models
+        }
+      </button>
+
+      <button
+        class="btn btn--primary"
+        (click)="runForecast()"
+        [disabled]="isPredicting()"
+      >
+        @if (isPredicting()) {
+          <span class="spinner-sm" aria-hidden="true"></span>
+          Predicting…
+        } @else {
+          Run Forecast
+        }
+      </button>
+    </div>
+  </div>
+
+  <!-- Error banner -->
+  @if (isError()) {
+    <div class="banner banner--error">
+      <p>{{ errorMessage() }}</p>
+    </div>
+  }
+
+  <!-- Train result banner -->
+  @if (trainResult(); as tr) {
+    <div class="banner banner--success">
+      <p>
+        Trained {{ tr.clusters_trained }} cluster models in
+        {{ tr.total_training_time_seconds }}s
+      </p>
+    </div>
+  }
+
+  <!-- Metrics KPIs -->
+  @if (forecastMetrics()) {
+    <app-metrics-kpi
+      [metrics]="forecastMetrics()"
+      [clusterName]="selectedClusterName()"
+    />
+  }
+
+  <!-- Forecast chart -->
+  <app-forecast-chart
+    [forecast]="forecast()"
+    [historicalCentroid]="historicalCentroid()"
+    [clusterColor]="selectedClusterColor()"
+    [clusterName]="selectedClusterName()"
+  />
+
+  <!-- Bottom row: evaluation + feature importance -->
+  <div class="forecasting__grid forecasting__grid--two">
+    <app-evaluation-table [evaluation]="evaluation()" />
+    <app-feature-importance-chart
+      [importance]="featureImportance()"
+      [clusterColor]="selectedClusterColor()"
+    />
+  </div>
+</div>

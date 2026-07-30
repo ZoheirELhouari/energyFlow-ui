@@ -1,0 +1,39 @@
+<div class="dashboard">
+  @if (isLoading()) {
+    <div class="status status--loading">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Loading clustering results…</p>
+    </div>
+  } @else if (isError()) {
+    <div class="status status--error">
+      <p class="status__title">Could not load segmentation data</p>
+      <p class="status__detail">{{ errorMessage() }}</p>
+      <button type="button" class="status__btn" (click)="load()">Retry</button>
+    </div>
+  } @else if (isReady()) {
+    <!-- Zone 1: KPIs -->
+    <app-kpi-row class="dashboard__row" [clusters]="clusters()" />
+
+    <!-- Zone 2: Cluster distribution -->
+    <app-cluster-distribution class="dashboard__row" [clusters]="clusters()" />
+
+    <!-- Zone 3: Charts row 1 -->
+    <div class="dashboard__grid">
+      <app-consumption-patterns-chart [clusters]="clusters()" />
+    </div>
+
+    <!-- Zone 4: Charts row 2 -->
+    <div class="dashboard__grid dashboard__grid--two">
+      <app-variability-chart [clusters]="clusters()" />
+      <app-temperature-correlation-chart [clusters]="clusters()" />
+    </div>
+
+    <!-- Zone 5: Bottom row -->
+    <div class="dashboard__grid dashboard__grid--two">
+      <app-cluster-donut-chart [clusters]="clusters()" />
+    </div>
+    <div class="dashboard__grid">
+      <app-anomaly-detection />
+    </div>
+  }
+</div>

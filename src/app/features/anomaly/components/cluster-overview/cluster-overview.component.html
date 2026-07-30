@@ -1,0 +1,10 @@
+<app-dashboard-card
+  title="Cluster Overview"
+  subtitle="Anomaly counts and model performance per cluster — click a bar to filter"
+>
+  @if (options()) {
+    <div class="chart" echarts [options]="options()!" (chartClick)="onChartClick($event)"></div>
+  } @else {
+    <div class="chart chart--empty"><p>No cluster data available.</p></div>
+  }
+</app-dashboard-card>

@@ -1,0 +1,47 @@
+{
+  "name": "energyflow",
+  "title": "EnergyFlow",
+  "featured": true,
+  "shortDesc": "AI-powered analytics platform for energy companies. Multiview clustering, load forecasting, and anomaly detection on smart meter data.",
+  "stack": [
+    "Python",
+    "FastAPI",
+    "Angular",
+    "TypeScript",
+    "Apache ECharts",
+    "scikit-learn",
+    "PyTorch",
+    "Tailwind CSS"
+  ],
+  "demoUrl": "",
+  "githubUrl": "",
+  "details": {
+    "overview": "EnergyFlow is a full-stack smart meter analytics platform that helps energy companies understand consumption patterns across thousands of meters. It combines multiview clustering (FastMICE algorithm), gradient-boosted load forecasting, and LSTM-based anomaly detection into a single interactive dashboard. The backend processes multiview datasets (consumption, temperature, solar radiation) through ML pipelines, while the Angular frontend renders real-time KPIs, interactive ECharts visualizations, and geographic cluster maps — all in a dark-themed, responsive interface.",
+    "features": [
+      {
+        "title": "Multiview Customer Segmentation",
+        "desc": "Groups smart meters into clusters using the FastMICE ensemble consensus algorithm across three data views — consumption profiles, temperature, and solar radiation — producing 336-dimensional centroid load profiles. FastMICE is over 900x faster than neural network-based multiview clustering solutions while achieving superior accuracy. For more details, please refer to my master's thesis."
+      },
+      {
+        "title": "Load Forecasting",
+        "desc": "Predicts next 7–24 day consumption per cluster using Gradient Boosting Regressors with engineered features, expanding-window cross-validation, and 95% confidence intervals."
+      },
+      {
+        "title": "Anomaly & Fraud Detection",
+        "desc": "Trains per-cluster LSTM models combined with Robust EHWS smoothing to flag meters with abnormal consumption, ranking them by severity (critical, high, medium, fraud suspect)."
+      },
+      {
+        "title": "Interactive Analytics Dashboard",
+        "desc": "Cluster KPI cards, 365-day centroid line charts, temperature correlation scatter plots, variability bar charts, and zone-based geographic distribution donuts — all powered by Apache ECharts."
+      },
+      {
+        "title": "Meter-Level Drill-Down",
+        "desc": "Click any meter in the anomaly table to view its individual consumption vs. centroid vs. LSTM prediction timeline with highlighted anomaly flags."
+      },
+      {
+        "title": "Model Evaluation Suite",
+        "desc": "Cross-validation fold tables, feature importance rankings, and aggregate MAE/RMSE/MAPE metrics for transparent model performance assessment."
+      }
+    ]
+  }
+}

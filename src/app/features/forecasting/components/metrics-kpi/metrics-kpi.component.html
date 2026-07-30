@@ -1,0 +1,16 @@
+@if (metrics(); as m) {
+  <div class="kpi-row">
+    <div class="kpi">
+      <span class="kpi__label">MAPE</span>
+      <span class="kpi__value">{{ m.avg_mape | number:'1.2-2' }}<span class="kpi__unit">%</span></span>
+    </div>
+    <div class="kpi">
+      <span class="kpi__label">MAE</span>
+      <span class="kpi__value">{{ m.avg_mae | number:'1.3-3' }}<span class="kpi__unit"> kWh</span></span>
+    </div>
+    <div class="kpi">
+      <span class="kpi__label">RMSE</span>
+      <span class="kpi__value">{{ m.avg_rmse | number:'1.3-3' }}<span class="kpi__unit"> kWh</span></span>
+    </div>
+  </div>
+}

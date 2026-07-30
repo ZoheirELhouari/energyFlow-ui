@@ -1,1 +1,164 @@
-/* You can add global styles to this file, and also import other style files */
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
+/* =========================================================================
+   EnergyIQ — global styles
+   Dark-theme palette, reset, and a handful of utility classes used by the
+   dashboard layout. Tailwind is installed but not configured; when it's
+   wired up these utilities can be removed.
+   ========================================================================= */
+
+:root {
+  /* surfaces */
+  --bg-base: #0b0b11;
+  --bg-sidebar: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-card-hover: #1a1a2e;
+
+  /* text */
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* borders / dividers */
+  --border-subtle: #1e293b;
+  --border-strong: #334155;
+
+  /* accents */
+  --accent-teal: #06b6d4;
+  --accent-teal-dim: rgba(6, 182, 212, 0.14);
+
+  /* kpi card top-borders */
+  --kpi-green: #22c55e;
+  --kpi-amber: #f59e0b;
+  --kpi-purple: #8b5cf6;
+  --kpi-cyan: #06b6d4;
+
+  /* severity */
+  --severity-critical: #ef4444;
+  --severity-high: #f59e0b;
+
+  /* layout */
+  --sidebar-width: 220px;
+  --topbar-height: 64px;
+
+  /* type */
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --text-base: 13px;
+  --text-kpi: 28px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* ---------- lightweight utility classes used inline in templates -------- */
+.u-flex {
+  display: flex;
+}
+.u-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.u-items-center {
+  align-items: center;
+}
+.u-justify-between {
+  justify-content: space-between;
+}
+.u-gap-sm {
+  gap: 8px;
+}
+.u-gap-md {
+  gap: 12px;
+}
+.u-gap-lg {
+  gap: 16px;
+}
+.u-text-muted {
+  color: var(--text-secondary);
+}
+.u-text-dim {
+  color: var(--text-muted);
+}
+.u-text-sm {
+  font-size: 12px;
+}
+.u-text-xs {
+  font-size: 11px;
+}

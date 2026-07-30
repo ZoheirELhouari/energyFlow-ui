@@ -1,0 +1,12 @@
+<app-dashboard-card
+  title="Cluster Geographic Distribution"
+  subtitle="Share by zone"
+>
+  <div class="geo">
+    @for (d of donuts(); track d.zone.name) {
+      <div class="geo__item">
+        <div class="geo__chart" echarts [options]="d.option"></div>
+      </div>
+    }
+  </div>
+</app-dashboard-card>

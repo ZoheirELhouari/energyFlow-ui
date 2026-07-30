@@ -1,0 +1,36 @@
+@if (detail(); as d) {
+  <app-dashboard-card
+    [title]="'Meter #' + d.meter_id + ' — ' + d.cluster_name"
+    [subtitle]="d.severity + ' · ' + d.anomaly_days + ' anomalous days · MAPE ' + (d.mape | number:'1.1-1') + '% · ' + (d.is_fraud_suspect ? 'FRAUD SUSPECT' : 'Normal')"
+  >
+    <span slot="actions" class="severity-tag" [attr.data-severity]="d.severity">
+      {{ d.severity }}
+    </span>
+    <div class="chart" echarts [options]="options()!"></div>
+
+    @if (d.top_anomalous_days.length) {
+      <div class="top-days">
+        <h4 class="top-days__title">Top Anomalous Days</h4>
+        <div class="top-days__list">
+          @for (day of d.top_anomalous_days; track day.day_index) {
+            <div class="top-days__item" [class.flagged]="day.is_anomaly">
+              <span class="top-days__day">Day {{ day.day_index }}</span>
+              <span class="top-days__values">
+                {{ day.meter_kwh | number:'1.1-1' }}
+                @if (day.predicted_kwh !== null) {
+                  vs {{ day.predicted_kwh | number:'1.1-1' }} kWh (predicted)
+                }
+                <span class="top-days__delta" [class.positive]="day.deviation_kwh > 0">
+                  ({{ day.deviation_kwh > 0 ? '+' : '' }}{{ day.deviation_kwh | number:'1.1-1' }})
+                </span>
+                @if (day.is_anomaly) {
+                  <span class="anomaly-marker">anomaly</span>
+                }
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </app-dashboard-card>
+}

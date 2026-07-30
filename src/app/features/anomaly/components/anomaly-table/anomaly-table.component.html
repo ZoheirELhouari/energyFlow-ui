@@ -1,0 +1,42 @@
+<app-dashboard-card title="Top Anomalies" subtitle="Ranked by anomaly day count">
+  @if (anomalies().length) {
+    <div class="table-wrap">
+      <table class="anomaly-table">
+        <thead>
+          <tr>
+            <th>Meter</th>
+            <th>Cluster</th>
+            <th>Severity</th>
+            <th>Anomaly Days</th>
+            <th>MAPE</th>
+            <th>Deviation</th>
+            <th>Fraud</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (a of anomalies(); track a.meter_id) {
+            <tr class="anomaly-table__row" (click)="selectMeter(a.meter_id)">
+              <td class="anomaly-table__meter">#{{ a.meter_id }}</td>
+              <td>{{ a.cluster_id }}</td>
+              <td>
+                <span class="severity-badge" [attr.data-severity]="a.severity">
+                  {{ a.severity }}
+                </span>
+              </td>
+              <td>{{ a.anomaly_days }} / {{ a.total_days }}</td>
+              <td>{{ a.mape | number:'1.1-1' }}%</td>
+              <td>{{ a.mean_deviation_kwh | number:'1.2-2' }} kWh</td>
+              <td>
+                @if (a.is_fraud_suspect) {
+                  <span class="fraud-badge">Suspect</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <div class="empty">No anomalies detected.</div>
+  }
+</app-dashboard-card>

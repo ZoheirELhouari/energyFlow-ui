@@ -1,0 +1,12 @@
+<app-dashboard-card
+  title="Feature Importance"
+  subtitle="Top 15 features by GBR importance"
+>
+  @if (options()) {
+    <div class="chart" echarts [options]="options()!"></div>
+  } @else {
+    <div class="chart chart--empty">
+      <p>No feature importance data available.</p>
+    </div>
+  }
+</app-dashboard-card>

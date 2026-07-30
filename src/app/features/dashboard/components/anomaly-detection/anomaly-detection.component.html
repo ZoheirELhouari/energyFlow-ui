@@ -1,0 +1,28 @@
+<app-dashboard-card title="Anomaly Detection" subtitle="Live alerts">
+  <div slot="actions" class="anomaly__badges">
+    <span class="badge badge--critical">{{ criticalCount() }} Critical</span>
+    <span class="badge badge--high">{{ highCount() }} High</span>
+  </div>
+
+  <ul class="anomaly__list">
+    @for (a of items(); track a.id) {
+      <li class="anomaly" [class.anomaly--critical]="a.severity === 'critical'">
+        <span class="anomaly__dot" [attr.data-severity]="a.severity" aria-hidden="true"></span>
+        <div class="anomaly__body">
+          <div class="anomaly__head">
+            <span class="anomaly__title">{{ a.title }}</span>
+            <span class="badge" [class]="'badge--' + a.severity">
+              {{ a.severity === 'critical' ? 'Critical' : 'High' }}
+            </span>
+          </div>
+          <div class="anomaly__desc">{{ a.description }}</div>
+          <div class="anomaly__stats">
+            <span>&uarr; {{ a.deviation }}% deviation</span>
+            <span>&middot;</span>
+            <span>&#9201; {{ a.minutesAgo }}m ago</span>
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
+</app-dashboard-card>

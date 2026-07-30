@@ -1,0 +1,28 @@
+@if (scan(); as s) {
+  <div class="kpi-row">
+    <div class="kpi">
+      <span class="kpi__label">Total Meters</span>
+      <span class="kpi__value">{{ s.total_meters | number }}</span>
+    </div>
+    <div class="kpi kpi--anomalous">
+      <span class="kpi__label">Anomalous</span>
+      <span class="kpi__value">{{ s.anomalous_meters | number }}</span>
+    </div>
+    <div class="kpi kpi--critical">
+      <span class="kpi__label">Critical</span>
+      <span class="kpi__value">{{ s.critical_count | number }}</span>
+    </div>
+    <div class="kpi kpi--high">
+      <span class="kpi__label">High</span>
+      <span class="kpi__value">{{ s.high_count | number }}</span>
+    </div>
+    <div class="kpi kpi--medium">
+      <span class="kpi__label">Medium</span>
+      <span class="kpi__value">{{ s.medium_count | number }}</span>
+    </div>
+    <div class="kpi kpi--fraud">
+      <span class="kpi__label">Fraud Suspects</span>
+      <span class="kpi__value">{{ s.fraud_suspects | number }}</span>
+    </div>
+  </div>
+}

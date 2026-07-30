@@ -1,0 +1,43 @@
+<app-dashboard-card
+  title="Cross-Validation Results"
+  subtitle="Expanding-window folds"
+>
+  @if (evaluation(); as eval) {
+    <div class="table-wrap">
+      <table class="eval-table">
+        <thead>
+          <tr>
+            <th>Fold</th>
+            <th>Train</th>
+            <th>Test</th>
+            <th>MAE</th>
+            <th>RMSE</th>
+            <th>MAPE %</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (fold of eval.folds; track fold.fold) {
+            <tr>
+              <td>{{ fold.fold }}</td>
+              <td>{{ fold.train_size }}</td>
+              <td>{{ fold.test_size }}</td>
+              <td>{{ fold.mae | number:'1.2-2' }}</td>
+              <td>{{ fold.rmse | number:'1.2-2' }}</td>
+              <td>{{ fold.mape | number:'1.2-2' }}</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+          <tr class="eval-table__avg">
+            <td colspan="3">Average</td>
+            <td>{{ eval.average_metrics.avg_mae | number:'1.2-2' }}</td>
+            <td>{{ eval.average_metrics.avg_rmse | number:'1.2-2' }}</td>
+            <td>{{ eval.average_metrics.avg_mape | number:'1.2-2' }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  } @else {
+    <div class="empty">No evaluation data available.</div>
+  }
+</app-dashboard-card>

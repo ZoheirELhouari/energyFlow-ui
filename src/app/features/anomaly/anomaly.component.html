@@ -1,0 +1,188 @@
+<div class="anomaly-page">
+  <!-- Header -->
+  <header class="anomaly-page__header">
+    <div class="anomaly-page__title-block">
+      <h1 class="anomaly-page__title">Anomaly Detection</h1>
+      <p class="anomaly-page__subtitle">LSTM + EHWS fraud detection — identify meters deviating from cluster patterns</p>
+    </div>
+  </header>
+
+  <!-- Loading state -->
+  @if (isLoading()) {
+    <div class="banner banner--info">
+      <span class="spinner-sm" aria-hidden="true"></span>
+      <p>Checking for existing trained models…</p>
+    </div>
+  }
+
+  <!-- Step 1: Train LSTM -->
+  @if (!isLoading()) {
+  <div class="controls">
+    <div class="controls__group">
+      <label class="controls__label" for="window-size">Window Size</label>
+      <input
+        id="window-size"
+        class="controls__input"
+        type="number"
+        min="10"
+        max="60"
+        step="5"
+        [ngModel]="windowSize()"
+        (ngModelChange)="windowSize.set($event)"
+      />
+    </div>
+
+    <div class="controls__group">
+      <label class="controls__label" for="epochs">Epochs</label>
+      <input
+        id="epochs"
+        class="controls__input"
+        type="number"
+        min="10"
+        max="200"
+        step="10"
+        [ngModel]="epochs()"
+        (ngModelChange)="epochs.set($event)"
+      />
+    </div>
+
+    <div class="controls__actions">
+      <button
+        class="btn btn--primary"
+        (click)="trainModel()"
+        [disabled]="isTraining()"
+      >
+        @if (isTraining()) {
+          <span class="spinner-sm" aria-hidden="true"></span>
+          Training LSTM…
+        } @else {
+          1. Train LSTM Models
+        }
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Step 2: Scan with EHWS -->
+  @if (isTrained()) {
+    <div class="controls">
+      <div class="controls__group">
+        <label class="controls__label" for="k-threshold">Threshold (k)</label>
+        <input
+          id="k-threshold"
+          class="controls__input"
+          type="number"
+          min="0.5"
+          max="10"
+          step="0.5"
+          [ngModel]="kThreshold()"
+          (ngModelChange)="kThreshold.set($event)"
+        />
+      </div>
+
+      <div class="controls__group">
+        <label class="controls__label" for="l-param">Smoothing (λ)</label>
+        <input
+          id="l-param"
+          class="controls__input"
+          type="number"
+          min="0.1"
+          max="0.99"
+          step="0.01"
+          [ngModel]="lParam()"
+          (ngModelChange)="lParam.set($event)"
+        />
+      </div>
+
+      <div class="controls__actions">
+        <button
+          class="btn btn--primary"
+          (click)="runScan()"
+          [disabled]="isScanning()"
+        >
+          @if (isScanning()) {
+            <span class="spinner-sm" aria-hidden="true"></span>
+            Scanning…
+          } @else {
+            2. Run Anomaly Scan
+          }
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (isError()) {
+    <div class="banner banner--error">
+      <p>{{ errorMessage() }}</p>
+    </div>
+  }
+
+  <!-- Cluster filter tabs -->
+  @if (scanResult()) {
+    <div class="cluster-tabs">
+      <button
+        class="cluster-tab"
+        [class.cluster-tab--active]="selectedCluster() === null"
+        (click)="selectCluster(null)"
+      >
+        All Clusters
+      </button>
+      @for (cid of clusterIds(); track cid) {
+        <button
+          class="cluster-tab"
+          [class.cluster-tab--active]="selectedCluster() === cid"
+          (click)="selectCluster(cid)"
+        >
+          Cluster {{ cid }}
+          <span class="cluster-tab__count">{{ scanResult()!.cluster_stats[cid].anomaly_count }}</span>
+        </button>
+      }
+    </div>
+  }
+
+  <!-- KPIs -->
+  @if (scanResult()) {
+    <app-severity-kpi [scan]="filteredScanResult()" />
+  }
+
+  <!-- Cluster overview chart (only in "All" view) -->
+  @if (scanResult() && selectedCluster() === null) {
+    <app-cluster-overview
+      [clusterStats]="scanResult()!.cluster_stats"
+      [modelMetrics]="scanResult()!.model_metrics"
+      (clusterSelected)="selectCluster($event)"
+    />
+  }
+
+  <!-- Scatter + Table row -->
+  @if (anomalies().length) {
+    <div class="anomaly-page__grid anomaly-page__grid--two">
+      <app-anomaly-scatter
+        [anomalies]="anomalies()"
+        (meterSelected)="onMeterSelected($event)"
+      />
+      <app-anomaly-table
+        [anomalies]="anomalies()"
+        (meterSelected)="onMeterSelected($event)"
+      />
+    </div>
+  }
+
+  <!-- Meter detail panel -->
+  @if (loadingDetail()) {
+    <div class="detail-loading">
+      <span class="spinner-sm" aria-hidden="true"></span>
+      Loading meter details…
+    </div>
+  }
+
+  @if (meterDetail()) {
+    <div class="detail-panel">
+      <button class="detail-panel__close" (click)="closeMeterDetail()" aria-label="Close">
+        &times;
+      </button>
+      <app-meter-detail-chart [detail]="meterDetail()" />
+    </div>
+  }
+</div>
